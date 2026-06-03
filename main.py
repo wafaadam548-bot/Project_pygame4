@@ -11,7 +11,8 @@ class Screen:
         self.screen=pg.display.set_mode((width,height))
 class Background:
     def __init__(self):
-        self.board=pg.image.load("image")
+        self.board=pg.image.load("images/board.png")
+        self.rect=self.board.get_rect(midbottom=(1000,500))
 class Player2:
     def __init__(self):
         self.image=pg.image.load("images/player2.png")
@@ -25,11 +26,13 @@ class Player:
 screen = Screen(1000, 500)
 player=Player()
 player2=Player2()
+board=Background()
 while True:
     for event in pg.event.get():
         if event.type==pg.QUIT:
             pg.quit()#tell python to shut down all the pygame moudel 
             exit()#telling python to stop running the entire file
+        screen.screen.blit(board.board,board.rect)
         screen.screen.blit(player.image,player.rect)
         screen.screen.blit(player2.image,player2.rect)
         key =pg.key.get_pressed()
