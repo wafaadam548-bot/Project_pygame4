@@ -12,12 +12,12 @@ class Background:
 class Player2:
     def __init__(self):
         self.image=pg.image.load("images/player2.png")
-        self.image=pg.transform.scale(self.image,(200,200))
+        self.image=pg.transform.scale(self.image,(100,100))
         self.rect=self.image.get_rect(midbottom=(100,500 ))
 class Player:
     def __init__(self):
         self.image=(pg.image.load("images/player1.png"))
-        self.image=pg.transform.scale(self.image,(200,200))
+        self.image=pg.transform.scale(self.image,(100,100))
         self.rect=self.image.get_rect(midbottom=(70,500 ))
 screen = Screen(1000, 500)
 player=Player()
