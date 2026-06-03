@@ -1,6 +1,9 @@
 import pygame as pg
 pg.init()
 clock=pg.time.Clock()
+class Questions:
+    def __init__(self):
+        pass
 class Screen:
     def __init__(self , width, height):
         self.width=width
