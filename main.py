@@ -29,5 +29,14 @@ while True:
             exit()#telling python to stop running the entire file
         screen.screen.blit(player.image,player.rect)
         screen.screen.blit(player2.image,player2.rect)
+        key =pg.key.get_pressed()
+        if key[pg.K_RIGHT]:
+            player.rect.x+=3
+        if key[pg.K_LEFT]:
+            player.rect.x-=3
+        if key[pg.K_d]:
+            player2.rect.x+=3
+        if key[pg.K_a]:
+            player2-=3      
         pg.display.update()
         clock.tick(60)#Consistent Game Speed
