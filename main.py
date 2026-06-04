@@ -54,9 +54,18 @@ while True:
         player.rect.x+=10
     if key[pg.K_LEFT]:
         player.rect.x-=10
+    if key[pg.K_DOWN]:
+        player.rect.y+=4
+    if key[pg.K_UP]:
+        player.rect.y-=4
+    #the same for player2
     if key[pg.K_d]:
-        player2.rect.x+=10
+        player2.rect.x+=4
     if key[pg.K_a]:
-        player2.rect.x-=10      
+        player2.rect.x-=4
+    if key[pg.K_s]:
+        player2.rect.y+=4
+    if key[pg.K_w]:
+        player2.rect.y-=4      
     pg.display.update()
     clock.tick(60)#Consistent Game Speed
