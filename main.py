@@ -72,10 +72,10 @@ class Dice:
             target_screen.blit(self.dice_num_image, (900, 60))
 screen = Screen(1000, 500)
 player2=Player(("images/player2.png"),(110,110),   
-                pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT
+                pg.K_DOWN,pg.K_UP, pg.K_LEFT, pg.K_RIGHT
 )
 player1=Player(("images/player.png"),(150,110),  
-                 pg.K_w, pg.K_s, pg.K_a, pg.K_d
+                pg.K_s,pg.K_w, pg.K_a, pg.K_d
 )
 
 board=Background()
