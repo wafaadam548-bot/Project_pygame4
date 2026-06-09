@@ -2,7 +2,6 @@ import pygame as pg
 import random as random
 pg.init()
 clock=pg.time.Clock()
-
 font=pg.font.Font("Font/Archivo_Black/ArchivoBlack-Regular.ttf",30)
 class Questions:
     def __init__(self):
@@ -46,7 +45,23 @@ class Dice:
         for dice in range(1,9):
             self.dice_rolling_image=pg.image.load("images/animation/roll"+str(dice)+".png")
             self.dice_rolling_images.append(self.dice_rolling_image)
-
+    def trigger_roll(self):
+        if self.rolling is False:
+            self.rolling = True
+            self.roll_start_time = pg.time.get_ticks()
+    def  draw(self,target_screen):
+        if self.rolling:
+            self.current_time = pg.time.get_ticks()
+            if self.current_time - self.roll_start_time < self.roll_duration:
+                self.dice_roling_counter = (pg.time.get_ticks() // 100) % len(self.dice_rolling_images)
+                target_screen.blit(self.dice_rolling_images[self.dice_roling_counter], (900, 60))
+            else:
+                self.rolling = False
+                self.rand_num = random.randint(0, 5)
+                self.dice_num_image = self.dice_images[self.rand_num]
+                target_screen.blit(self.dice_num_image, (900, 60))
+        else:
+            target_screen.blit(self.dice_num_image, (900, 60))
 screen = Screen(1000, 500)
 player=Player()
 player2=Player2()
@@ -59,12 +74,9 @@ while True:
             pg.quit()#tell python to shut down all the pygame moudel 
             exit()#telling python to stop running the entire file
         if event.type==pg.KEYDOWN:
-            if event.key==pg.K_SPACE and dice.rolling is False:
-                dice.rolling=True#start roling
-                rand_num=random.randint(0,5)
-                dice.roll_start_time = pg.time.get_ticks()
             
-                    #show the dicewhich contains a numers
+            dice.trigger_roll()                   
+             #show the dicewhich contains a numers
     #display the board, player1, and player2 
     screen.screen.blit(board.board,board.rect)
     screen.screen.blit(player.image,player.rect)
@@ -91,18 +103,7 @@ while True:
         player2.rect.y+=4
     if key[pg.K_w]:
         player2.rect.y-=4  
-    if dice.rolling:
-        current_time = pg.time.get_ticks()
-        if current_time - dice.roll_start_time < dice.roll_duration:
-            dice.dice_roling_counter = (pg.time.get_ticks() // 100) % len(dice.dice_rolling_images)
-            screen.screen.blit(dice.dice_rolling_images[dice.dice_roling_counter], (900, 60))
-        else:
-            dice.rolling = False
-            rand_num = random.randint(0, 5)
-            dice.dice_num_image = dice.dice_images[rand_num]
-            screen.screen.blit(dice.dice_num_image, (900, 60))
-    else:
-        screen.screen.blit(dice.dice_num_image, (900, 60))    
+    dice.draw(screen.screen)
     pg.display.update()
     clock.tick(60)#Consistent Game Speed
     #draw 60 frame per second
