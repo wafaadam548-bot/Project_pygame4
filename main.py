@@ -16,19 +16,27 @@ class Background:
         self.board=pg.image.load("images/board.png")
         self.board =pg.transform.scale(self.board, (1000, 500))#resize the game board
         self.rect=self.board.get_rect(midbottom=(500,500))
-class Player2:
-    def __init__(self):
-        self.image=pg.image.load("images/player2.png")#upload the player image
-        self.image=pg.transform.scale(self.image,(100,100))#resize the game image
-        self.rect=self.image.get_rect(midbottom=(150,110 ))
 class Player:
-    def __init__(self):
-        self.image=(pg.image.load("images/player.png"))#upload the player image 
-        self.image=pg.transform.scale(self.image,(100,100))#resize the image
-        self.rect=self.image.get_rect(midbottom=(110,110 ))
+    def __init__(self,image,position,up,down ,left, right ):
+        self.image=pg.image.load(image)#upload the player image
+        self.image=pg.transform.scale(self.image,(100,100))#resize the game image
+        self.rect=self.image.get_rect(midbottom=position)
+        self.up = up
+        self.down = down
+        self.left = left
+        self.right = right
     black=(0,0,0)
     white=(225,225,225)
     x,y=(100,100)
+    def move(self,key):
+        if key[self.right]:
+            self.rect.x+=4
+        if key[self.left]:
+            self.rect.x-=4
+        if key[self.up]:
+            self.rect.y+=4
+        if key[self.down]:
+            self.rect.y-=4
 class Dice:
     def __init__(self):
         self.dice_value = 1
@@ -63,8 +71,13 @@ class Dice:
         else:
             target_screen.blit(self.dice_num_image, (900, 60))
 screen = Screen(1000, 500)
-player=Player()
-player2=Player2()
+player2=Player(("images/player2.png"),(110,110),   
+                pg.K_UP, pg.K_DOWN, pg.K_LEFT, pg.K_RIGHT
+)
+player1=Player(("images/player.png"),(150,110),  
+                 pg.K_w, pg.K_s, pg.K_a, pg.K_d
+)
+
 board=Background()
 black=(0,0,0)
 dice=Dice()
@@ -79,30 +92,15 @@ while True:
              #show the dicewhich contains a numers
     #display the board, player1, and player2 
     screen.screen.blit(board.board,board.rect)
-    screen.screen.blit(player.image,player.rect)
+    screen.screen.blit(player1.image,player1.rect)
     screen.screen.blit(player2.image,player2.rect)
     
     
     pg.draw.rect(screen.screen,black, (900,50,70,70))
     key =pg.key.get_pressed()
-    #set the movement for the first player
-    if key[pg.K_RIGHT]:
-        player.rect.x+=4
-    if key[pg.K_LEFT]:
-        player.rect.x-=4
-    if key[pg.K_DOWN]:
-        player.rect.y+=4
-    if key[pg.K_UP]:
-        player.rect.y-=4
-    #set movment for player2
-    if key[pg.K_d]:
-        player2.rect.x+=4
-    if key[pg.K_a]:
-        player2.rect.x-=4
-    if key[pg.K_s]:
-        player2.rect.y+=4
-    if key[pg.K_w]:
-        player2.rect.y-=4  
+    player1.move(key)
+    player2.move(key)
+
     dice.draw(screen.screen)
     pg.display.update()
     clock.tick(60)#Consistent Game Speed
