@@ -16,6 +16,22 @@ class Background:
         self.board=pg.image.load("images/board.png")
         self.board =pg.transform.scale(self.board, (1000, 500))#resize the game board
         self.rect=self.board.get_rect(midbottom=(500,500))
+    def gride(self):
+        self.tile=[]
+        self.start_X=180
+        self.start_Y=850
+        self.tile_width=90
+        self.tile_height=90
+        for row in range(6):
+            for col in range(10):
+                if row % 2 == 0:
+                    x = self.start_x + col * self.tile_width
+                else:
+                    x =  self.tile_width + (9 - col) *  self.tile_width
+
+                y =  self.tile_width - row *  self.tile_width
+
+        self.tiles.append((x, y))
 class Player:
     def __init__(self,image,position,up,down ,left, right ):
         self.image=pg.image.load(image)#upload the player image
@@ -25,6 +41,7 @@ class Player:
         self.down = down
         self.left = left
         self.right = right
+        self.current_square = 0
     black=(0,0,0)
     white=(225,225,225)
     x,y=(100,100)
@@ -87,15 +104,16 @@ while True:
             pg.quit()#tell python to shut down all the pygame moudel 
             exit()#telling python to stop running the entire file
         if event.type==pg.KEYDOWN:
-            
-            dice.trigger_roll()                   
+            if event.key==pg.K_SPACE:
+                dice.trigger_roll()                   
              #show the dicewhich contains a numers
     #display the board, player1, and player2 
     screen.screen.blit(board.board,board.rect)
     screen.screen.blit(player1.image,player1.rect)
     screen.screen.blit(player2.image,player2.rect)
     
-    
+    screen.screen.blit(player1.image, player1.rect)
+    screen.screen.blit(player2.image, player2.rect)
     pg.draw.rect(screen.screen,black, (900,50,70,70))
     key =pg.key.get_pressed()
     player1.move(key)
