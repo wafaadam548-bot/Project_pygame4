@@ -1,7 +1,6 @@
 import pygame as pg
 import random as random
 import sys
-
 pg.init()
 clock=pg.time.Clock()
 font=pg.font.Font("Font/Archivo_Black/ArchivoBlack-Regular.ttf",30)
